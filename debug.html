@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>WumpusJS</title>
+    <script src="Scripts/map.js"></script>
+    <script src="Scripts/game.js"></script>
+    <script src="Scripts/const.js"></script>
+    <script src="Scripts/draw.js"></script>
+    <script>
+        window.onload = function () {
+            console.log("document loaded");
+            Map.init(Game.tileSize);
+            for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                    document.getElementById("debug").innerHTML += (Map.get(i, j) + " &nbsp; &nbsp; ");
+                }
+                document.getElementById("debug").innerHTML += "<br>";
+            }
+
+            var wumpusImg = new Image();
+            wumpusImg.src = "Images/wumpus.png";
+            var goldImg = new Image();
+            goldImg.src = "Images/gold.png";
+            var pitImg = new Image();
+            pitImg.src = "Images/pit.png";
+            var breezeImg = new Image();
+            breezeImg.src = "Images/breeze.png";
+            var stenchImg = new Image();
+            stenchImg.src = "Images/stench.png";
+            var breezestenchImg = new Image();
+            breezestenchImg.src = "Images/breezeandstench.png";
+            var goldAndBreezeImg = new Image();
+            goldAndBreezeImg.src = "Images/breezeandgold.png";
+            var goldAndStenchImg = new Image();
+            goldAndStenchImg.src = "Images/stenchandgold.png";
+            var allImg = new Image();
+            allImg.src = "Images/breezestenchgold.png";
+
+            Draw.canvasdraw(document.getElementById("Canvas1"), wumpusImg, goldImg, pitImg, breezeImg, stenchImg, breezestenchImg, goldAndStenchImg, allImg);
+        };
+    </script>
+</head>
+<body>
+<canvas id="Canvas1" width="500" height="500">Your browser not support</canvas>
+<div id="debug"></div>
+</body>
+</html>
