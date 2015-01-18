@@ -6,7 +6,11 @@ var Draw = {
         if (canvas && canvas.getContext) {
             ctx = canvas.getContext("2d");
             if (ctx) {
+
                 canvas.style.border = "2px solid #000";
+                canvas.width=Game.width;
+                canvas.height=Game.height;
+
                 for (var i = 0; i < Map.rows; i++) {
 
                     for (var j = 0; j < Map.columns; j++) {

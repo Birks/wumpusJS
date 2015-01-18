@@ -11,8 +11,8 @@
         window.onload = function () {
             console.log("document loaded");
             Map.init(Game.tileSize);
-            for (var i = 0; i < 5; i++) {
-                for (var j = 0; j < 5; j++) {
+            for (var i = 0; i < Map.rows; i++) {
+                for (var j = 0; j < Map.columns; j++) {
                     document.getElementById("debug").innerHTML += (Map.get(i, j) + " &nbsp; &nbsp; ");
                 }
                 document.getElementById("debug").innerHTML += "<br>";
@@ -42,7 +42,7 @@
     </script>
 </head>
 <body>
-<canvas id="Canvas1" width="500" height="500">Your browser not support</canvas>
+<canvas id="Canvas1">Your browser not support</canvas>
 <div id="debug"></div>
 </body>
 </html>
