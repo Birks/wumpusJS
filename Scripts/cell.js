@@ -1,6 +1,5 @@
 function Cell(x, y){
     this.pos = { x: x, y: y };
-    this.isSafe = true;
     this.firstShot = true;
     this.hasBreeze = false;
     this.hasStink = false;
@@ -9,3 +8,8 @@ function Cell(x, y){
     this.hasGold = false;
     this.hasGlimmer = false;
 }
+
+Cell.prototype.isSafe = function(){
+    if(!this.hasPit && !this.WUMPUS) return true;
+    if(this.hasPit || this.hasWumpus) return false;
+};
