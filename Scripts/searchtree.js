@@ -1,0 +1,4 @@
+var SearchTree = {
+    openList: [],
+    closedList: []
+};

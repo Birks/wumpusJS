@@ -21,9 +21,8 @@ var KnowledgeBase = {
 
     /* relouad our knowledge database */
     reload: function(){
-        for(var i = 0; i < KnowledgeBase.sentences.length; i++){
+        for(var i = 0; i < KnowledgeBase.sentences.length; i++)
             this.cellMod(KnowledgeBase.sentences[i].pos.x, KnowledgeBase.sentences[i].pos.y, i);
-        }
     },
 
     /* modify the cell
@@ -35,11 +34,9 @@ var KnowledgeBase = {
             this.db[i][j].firstShot = false;
         }
         else {
-            this.db[i][j].hasBreeze = this.db[i][j].hasBreeze && KnowledgeBase.sentences[k].hasBreeze;
+            //this.db[i][j].hasBreeze = this.db[i][j].hasBreeze && KnowledgeBase.sentences[k].hasBreeze;
             this.db[i][j].hasPit = this.db[i][j].hasPit && KnowledgeBase.sentences[k].hasPit;
-            this.db[i][j].hasStink = this.db[i][j].hasStink && KnowledgeBase.sentences[k].hasStink;
-            this.db[i][j].hasGold = this.db[i][j].hasGold && KnowledgeBase.sentences[k].hasGold;
-            this.db[i][j].hasGlimmer = this.db[i][j].hasGlimmer && KnowledgeBase.sentences[k].hasGlimmer;
+            //this.db[i][j].hasStink = this.db[i][j].hasStink && KnowledgeBase.sentences[k].hasStink;
             this.db[i][j].hasWumpus = this.db[i][j].hasWumpus && KnowledgeBase.sentences[k].hasWumpus;
         }
     }

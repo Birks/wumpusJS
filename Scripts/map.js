@@ -60,8 +60,6 @@ var Map = {
         if(this.tiles[pos.x][pos.y].hasStink) cell.hasWumpus = true;
         else cell.hasWumpus = false;
 
-        if(this.tiles[pos.x][pos.y].hasGlimmer) cell.hasGold = true;
-
         KnowledgeBase.add(cell);
     }
 };

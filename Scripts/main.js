@@ -1,35 +1,43 @@
 window.onload = function() {
-    /* kdb init */
+    /* init */
     KnowledgeBase.init(DIM);
-    /* initialize map */
     Map.init(DIM);
-    Map.tiles[3][1].hasBreeze = true;
-    Map.tiles[2][0].hasStink = true;
-    Map.tiles[1][1].hasGold = true;
-    Map.tiles[1][1].hasGlimmer = true;
-
-    /* create a new agent */
     var agent = new Agent(DIM - 1, 0);
 
-    agent.moveTo(agent.currPos.x, agent.currPos.y + 1);
-    Map.gatherAdjacentInfo(agent);
+    /* initialize map */
+   /* Map.tiles[0][0].hasStink = true;
+    Map.tiles[1][0].hasWumpus = true;
+    Map.tiles[2][0].hasStink = true;
+    Map.tiles[1][1].hasBreeze = true;
+    Map.tiles[1][1].hasStink = true;
+    Map.tiles[1][1].hasGold = true;
+    Map.tiles[1][1].hasGlimmer = true;
+    Map.tiles[1][3].hasBreeze = true;
+    Map.tiles[2][1].hasPit = true;
+    Map.tiles[2][2].hasBreeze = true;
+    Map.tiles[2][3].hasPit = true;
+    Map.tiles[3][0].hasPit = true;
+    Map.tiles[3][1].hasBreeze = true;
+    Map.tiles[3][3].hasBreeze = true;*/
 
-    agent.moveTo(agent.currPos.x, agent.currPos.y - 1);
-    Map.gatherAdjacentInfo(agent);
+    Map.tiles[0][0].hasStink = true;
+    Map.tiles[1][0].hasWumpus = true;
+    Map.tiles[2][0].hasStink = true;
+    Map.tiles[1][1].hasStink = true;
+    Map.tiles[3][1].hasBreeze = true;
+    Map.tiles[2][2].hasBreeze = true;
+    Map.tiles[3][2].hasPit = true;
+    Map.tiles[1][3].hasGold = true;
+    Map.tiles[1][3].hasGlimmer = true;
+    Map.tiles[3][3].hasBreeze = true;
 
-    agent.moveTo(agent.currPos.x - 1, agent.currPos.y);
-    Map.gatherAdjacentInfo(agent);
 
-    agent.moveTo(agent.currPos.x, agent.currPos.y + 1);
-    Map.gatherAdjacentInfo(agent);
 
-    agent.moveTo(agent.currPos.x - 1, agent.currPos.y);
-    Map.gatherAdjacentInfo(agent);
-    //console.log("Agent's current position is x: " + agent.currPos.x + " y: " + agent.currPos.y);
+    /* create a new agent */
+    while(!agent.hasGold) {
+        agent.move();
+        Map.gatherAdjacentInfo(agent);
+    }
 
-    console.log(KnowledgeBase.sentences);
-    console.log("The KDB:");
     console.log(KnowledgeBase.db);
-    console.log("The map:");
-    console.log(Map.tiles);
 };

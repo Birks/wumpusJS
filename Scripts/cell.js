@@ -7,9 +7,9 @@ function Cell(x, y){
     this.hasWumpus = false;
     this.hasGold = false;
     this.hasGlimmer = false;
-}
 
-Cell.prototype.isSafe = function(){
-    if(!this.hasPit && !this.WUMPUS) return true;
-    if(this.hasPit || this.hasWumpus) return false;
-};
+    this.isSafe = function(){
+        if(!this.hasPit && !this.hasWumpus && !this.hasStink && !this.hasBreeze) return true;
+        else return false;
+    }
+}
