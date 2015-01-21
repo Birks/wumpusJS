@@ -7,6 +7,9 @@ function Cell(x, y){
     this.hasWumpus = false;
     this.hasGold = false;
     this.hasGlimmer = false;
+    this.visited = false;
+    this.wumpusCount = 0;
+    this.pitCount = 0;
 
     this.isSafe = function(){
         if(!this.hasPit && !this.hasWumpus && !this.hasStink && !this.hasBreeze) return true;
