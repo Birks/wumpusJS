@@ -7,3 +7,6 @@ var Orientation = {
     LEFT: 2,
     UP: 3
 };
+
+var MAX_STEPS = 55;
+var MIN_BRAVE = 15;
