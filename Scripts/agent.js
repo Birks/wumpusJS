@@ -30,9 +30,7 @@ function Agent(x, y){
             shifted++;
         }
 
-        /*console.log("-------------------------");
-        console.log(SearchTree.openList);
-        console.log("-------------------------");*/
+        SearchTree.closedList.push({ x: this.currPos.x, y: this.currPos.y });
 
         if(!this.brave) {
             do {
@@ -63,7 +61,14 @@ function Agent(x, y){
             console.log("Something is glimmering in the dark!");
             this.pickUp();
         }
+    };
 
+    this.goBack = function(){
+        var nextStep = SearchTree.closedList.pop();
+        this.prevPos = { x: this.currPos.x, y: this.currPos.y };
+        this.currPos = { x: nextStep.x, y: nextStep.y };
+
+        console.log("I am currently at x: " + this.currPos.x + " y: " + this.currPos.y);
     };
 
     this.pickUp = function(){
