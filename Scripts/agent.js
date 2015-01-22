@@ -1,15 +1,13 @@
 function Agent(x, y){
     this.currPos = {x: x, y: y};
     this.prevPos = {x: x, y: y};
-    this.orientation = Orientation.RIGHT;
-    this.brave = false;
     this.hasGold = false;
-    this.noPosMod = 0;
     this.ammo = 1;
 
     this.move = function(){
         /* variables */
         var nextStep;
+        var rand;
         var shifted = 0;
         /* see if it can kill the wumpus */
         this.killWumpus();
@@ -35,16 +33,15 @@ function Agent(x, y){
 
         SearchTree.closedList.push({ x: this.currPos.x, y: this.currPos.y });
 
-        if(!this.brave) {
+        rand = Math.random();
+        if(rand < 0.4){
+            rand = Math.floor(Math.random() * shifted);
+            nextStep = SearchTree.openList[rand];
+        }
+        else{
             do {
                 nextStep = SearchTree.openList.shift();
-                //console.log(nextStep.x + " : " + nextStep.y + " is " + KnowledgeBase.db[nextStep.x][nextStep.y].isSafe());
             } while(!KnowledgeBase.db[nextStep.x][nextStep.y].isSafe());
-        }
-        else {
-            var rand = Math.floor(Math.random() * shifted);
-            nextStep = SearchTree.openList[rand];
-            SearchTree.openList = [];
         }
 
         if(!KnowledgeBase.db[this.currPos.x][this.currPos.y].visited) this.brave = false;
@@ -74,6 +71,13 @@ function Agent(x, y){
     };
 
     this.killWumpus = function(){
+        if(this.ammo < 0){
+            console.log("--------------------------------------");
+            console.log("Oh noes!! I am out of ammo!");
+            console.log("--------------------------------------");
+            return;
+        }
+
         if(KnowledgeBase.wumpusCoords.x != -1 && KnowledgeBase.wumpusCoords.y != -1){
             if(this.currPos.x == KnowledgeBase.wumpusCoords.x || this.currPos.y == KnowledgeBase.wumpusCoords.y){
                 console.log("--------------------------------------");
@@ -90,6 +94,7 @@ function Agent(x, y){
                     }
                 }
 
+                this.ammo--;
                 KnowledgeBase.wumpusCoords.x = -1;
                 KnowledgeBase.wumpusCoords.y = -1;
                 KnowledgeBase.wumpusIsAlive = false;

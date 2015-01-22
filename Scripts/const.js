@@ -8,4 +8,4 @@ var Orientation = {
     UP: 3
 };
 
-var MAX_STEPS = 55;
+var MAX_STEPS = 45;

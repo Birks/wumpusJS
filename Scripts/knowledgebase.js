@@ -26,7 +26,6 @@ var KnowledgeBase = {
     reload: function(){
         var i;
 
-        /* count findings */
         if(this.wumpusIsAlive){
             for(i = 0; i < this.sentences.length; i++){
                 this.cellMod(this.sentences[i].pos.x, this.sentences[i].pos.y, i);
@@ -44,6 +43,8 @@ var KnowledgeBase = {
                 }
             }
         }
+
+
     },
 
     /* modify the cell
