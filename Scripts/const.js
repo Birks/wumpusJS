@@ -1,12 +1,16 @@
+/* general constants */
+var DIM = 4;
+
+var Orientation = {
+    RIGHT: 0,
+    DOWN: 1,
+    LEFT: 2,
+    UP: 3
+};
+
+var MAX_STEPS = 45;
+
 var Type = {
-    EMPTY: 0,
-    PIT: 1,
-    BREEZE: 2,
-    STENCH: 3,
-    GOLD: 4,
-    BREEZEANDSTENCH: 5,
-    GOLDANDBREEZE: 6,
-    GOLDANDSTENCH: 7,
-    ALL:8,
-    WUMPUS:9
+    WUMPUS: 0,
+    PIT: 1
 };
