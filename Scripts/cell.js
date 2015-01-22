@@ -1,6 +1,7 @@
 function Cell(x, y){
     this.pos = { x: x, y: y };
-    this.firstShot = true;
+    this.firstWumpusGuess = true;
+    this.firstPitGuess = true;
     this.hasBreeze = false;
     this.hasStink = false;
     this.hasPit = false;

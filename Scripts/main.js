@@ -7,7 +7,7 @@ window.onload = function() {
     var agent = new Agent(DIM - 1, 0);
 
     /* initialize map */
-    Map.tiles[0][0].hasStink = true;
+    /*Map.tiles[0][0].hasStink = true;
     Map.tiles[1][0].hasWumpus = true;
     Map.tiles[2][0].hasStink = true;
     Map.tiles[1][1].hasBreeze = true;
@@ -18,7 +18,7 @@ window.onload = function() {
     Map.tiles[2][2].hasBreeze = true;
     Map.tiles[2][3].hasPit = true;
     Map.tiles[3][1].hasBreeze = true;
-    Map.tiles[3][3].hasBreeze = true;
+    Map.tiles[3][3].hasBreeze = true;*/
 
     /*Map.tiles[0][0].hasStink = true;
     Map.tiles[1][0].hasWumpus = true;
@@ -43,7 +43,7 @@ window.onload = function() {
     Map.tiles[3][3].hasGold = true;
     Map.tiles[3][3].hasGlimmer = true;*/
 
-    /*Map.tiles[1][0].hasStink = true;
+    Map.tiles[1][0].hasStink = true;
     Map.tiles[0][1].hasStink = true;
     Map.tiles[2][1].hasStink = true;
     Map.tiles[1][2].hasStink = true;
@@ -53,7 +53,7 @@ window.onload = function() {
     Map.tiles[3][2].hasPit = true;
     Map.tiles[3][3].hasBreeze = true;
     Map.tiles[0][3].hasGold = true;
-    Map.tiles[0][3].hasGlimmer = true;*/
+    Map.tiles[0][3].hasGlimmer = true;
 
     /* create a new agent */
     while(!agent.hasGold) {
