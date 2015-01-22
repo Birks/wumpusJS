@@ -34,9 +34,11 @@ function Agent(x, y){
         SearchTree.closedList.push({ x: this.currPos.x, y: this.currPos.y });
 
         rand = Math.random();
+        /* dfs with a random element */
         if(rand < 0.4){
             rand = Math.floor(Math.random() * shifted);
             nextStep = SearchTree.openList[rand];
+            SearchTree.openList.splice(rand, 1);
         }
         else{
             do {
@@ -44,9 +46,7 @@ function Agent(x, y){
             } while(!KnowledgeBase.db[nextStep.x][nextStep.y].isSafe());
         }
 
-        if(!KnowledgeBase.db[this.currPos.x][this.currPos.y].visited) this.brave = false;
-
-       // SearchTree.openList = [];
+        /* set agent positions */
         this.prevPos = { x: this.currPos.x, y: this.currPos.y };
         this.currPos = { x: nextStep.x, y: nextStep.y };
 
