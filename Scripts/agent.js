@@ -82,23 +82,31 @@ function Agent(x, y){
             if(this.currPos.x == KnowledgeBase.wumpusCoords.x || this.currPos.y == KnowledgeBase.wumpusCoords.y){
                 console.log("--------------------------------------");
                 console.log("Well this one's ought to hurt! BUMM");
-                console.log("A loud scream can be heard! The Wumpus is dead!!");
-                console.log("--------------------------------------");
+                /* if the agent is able to shoot down the wumpus
+                 * meaning his coordinates are correct */
+                 if(this.currPos.x == Map.wumpusCoords.x || this.currPos.y == Map.wumpusCoords.y){
 
-                /* do some cleanup */
-                Map.tiles[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
+                    /* do some cleanup */
+                    Map.tiles[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
 
-                for(var i = 0; i < DIM; i++){
-                    for(var j = 0; j < DIM; j++){
-                        if(KnowledgeBase.db[i][j].hasWumpus) KnowledgeBase.db[i][j].hasWumpus = false;
+                    for(var i = 0; i < DIM; i++){
+                        for(var j = 0; j < DIM; j++){
+                            if(KnowledgeBase.db[i][j].hasWumpus) KnowledgeBase.db[i][j].hasWumpus = false;
+                        }
                     }
-                }
 
-                this.ammo--;
-                KnowledgeBase.wumpusCoords.x = -1;
-                KnowledgeBase.wumpusCoords.y = -1;
-                KnowledgeBase.wumpusIsAlive = false;
+                    KnowledgeBase.wumpusCoords.x = -1;
+                    KnowledgeBase.wumpusCoords.y = -1;
+                    KnowledgeBase.wumpusIsAlive = false;
+
+                     console.log("A loud scream can be heard! The Wumpus is dead!!");
+                }
+                else{ /* the agent was at the wrong position */
+                     console.log("Oh noes! I was wrong about this...");
+                 }
             }
+            console.log("--------------------------------------");
+            this.ammo--;
         }
     };
 

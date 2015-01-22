@@ -1,6 +1,7 @@
 var Map = {
     tiles: [],
     dim: 0,
+    wumpusCoords: { x: -1, y: -1 },
 
     init: function (dim){
         this.dim = dim;

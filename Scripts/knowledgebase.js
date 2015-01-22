@@ -2,7 +2,6 @@ var KnowledgeBase = {
     sentences: [],
     db: [],
     wumpusCoords: { x: -1, y: -1 },
-    pitCoords: [],
     wumpusIsAlive: true,
 
     /* initialize an empty db */
@@ -34,23 +33,14 @@ var KnowledgeBase = {
             if(this.wumpusIsAlive && this.sentences[i].hasWumpus){
                 this.db[this.sentences[i].pos.x][this.sentences[i].pos.y].wumpusCount++;
             }
-
-            /* pits */
-            if(this.sentences[i].hasPit){
-                this.db[this.sentences[i].pos.x][this.sentences[i].pos.y].pitCount++;
-            }
         }
 
         /* try to find the wumpus */
         for(i = 0; i < DIM; i++){
             for(var j = 0; j < DIM; j++){
                 /* wumpus */
-                if(this.wumpusIsAlive && this.db[i][j].wumpusCount >= 3) this.wumpusCoords = { x: i, y: j };
+                if(this.wumpusIsAlive && this.db[i][j].wumpusCount >= 2) this.wumpusCoords = { x: i, y: j };
                 this.db[i][j].wumpusCount = 0;
-
-                /* pits */
-                if(this.db[i][j].pitCount >= 3) this.pitCoords.push({ x: i, y: j });
-                this.db[i][j].pitCount = 0;
             }
         }
     },
