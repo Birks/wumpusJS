@@ -63,4 +63,6 @@ var Map = {
 
         KnowledgeBase.add(cell);
     }
+
+
 };

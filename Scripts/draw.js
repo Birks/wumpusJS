@@ -89,13 +89,17 @@ var Draw = {
         }
     },
 
-    drawmove: function(canvas, x,y) {
+    drawmove: function (canvas, type, x, y) {
         var ctx;
         if (canvas && canvas.getContext) {
             ctx = canvas.getContext("2d");
             if (ctx) {
                 ctx.globalAlpha = 0.2;
-                ctx.fillRect(y*Game.tileSize,x*Game.tileSize, Game.tileSize, Game.tileSize);
+                if (type == "forward") {
+                    ctx.fillStyle = "#00CCFF";
+                }
+                else ctx.fillStyle = "#99FF33";
+                ctx.fillRect(y * Game.tileSize, x * Game.tileSize, Game.tileSize, Game.tileSize);
 
             }
         }

@@ -64,6 +64,8 @@ window.onload = function() {
     Draw.init();
     Draw.canvasdraw(document.getElementById("Canvas1"));
 
+    /* draws the player on start location */
+    Draw.drawmove(document.getElementById("Canvas1"),agent.currPos.x,agent.currPos.y)
 
     /* create a new agent */
     while(!agent.hasGold) {
@@ -76,6 +78,7 @@ window.onload = function() {
 
         /* move */
         agent.move();
+        Draw.drawmove(document.getElementById("Canvas1"),"forward",agent.currPos.x,agent.currPos.y);
         Map.gatherAdjacentInfo(agent);
 
         /* see if the agent is still alive */
@@ -106,6 +109,7 @@ window.onload = function() {
         while(SearchTree.closedList.length > 0){
             if(agent.currPos.x == 3 && agent.currPos.y == 0) break;
             agent.goBack();
+            Draw.drawmove(document.getElementById("Canvas1"),"backward",agent.currPos.x,agent.currPos.y);
         }
 
         console.log("--------------------------------------");
