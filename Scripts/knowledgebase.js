@@ -21,7 +21,7 @@ var KnowledgeBase = {
         this.sentences.push(cell);
     },
 
-    /* relouad our knowledge database */
+    /* reload our knowledge database */
     reload: function(){
         var i;
 

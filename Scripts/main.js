@@ -59,6 +59,12 @@ window.onload = function() {
     Map.tiles[0][3].hasGold = true;
     Map.tiles[0][3].hasGlimmer = true;*/
 
+
+    /* draw the map on canvas */
+    Draw.init();
+    Draw.canvasdraw(document.getElementById("Canvas1"));
+
+
     /* create a new agent */
     while(!agent.hasGold) {
         if(steps > MAX_STEPS) {
@@ -107,4 +113,7 @@ window.onload = function() {
         console.log("--------------------------------------");
 
     }
+
+
+
 };
