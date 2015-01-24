@@ -8,18 +8,18 @@ window.onload = function () {
 
     /* initialize map */
     /*Map.tiles[0][0].hasStink = true;
-     Map.tiles[1][0].hasWumpus = true;
-     Map.wumpusCoords = { x: 1, y: 0};
-     Map.tiles[2][0].hasStink = true;
-     Map.tiles[1][1].hasBreeze = true;
-     Map.tiles[1][1].hasStink = true;
-     Map.tiles[1][1].hasGold = true;
-     Map.tiles[1][1].hasGlimmer = true;
-     Map.tiles[1][3].hasBreeze = true;
-     Map.tiles[2][2].hasBreeze = true;
-     Map.tiles[2][3].hasPit = true;
-     Map.tiles[3][1].hasBreeze = true;
-     Map.tiles[3][3].hasBreeze = true;*/
+    Map.tiles[1][0].hasWumpus = true;
+    Map.wumpusCoords = { x: 1, y: 0};
+    Map.tiles[2][0].hasStink = true;
+    Map.tiles[1][1].hasBreeze = true;
+    Map.tiles[1][1].hasStink = true;
+    Map.tiles[1][1].hasGold = true;
+    Map.tiles[1][1].hasGlimmer = true;
+    Map.tiles[1][3].hasBreeze = true;
+    Map.tiles[2][2].hasBreeze = true;
+    Map.tiles[2][3].hasPit = true;
+    Map.tiles[3][1].hasBreeze = true;
+    Map.tiles[3][3].hasBreeze = true;*/
 
     /*Map.tiles[0][0].hasStink = true;
      Map.tiles[1][0].hasWumpus = true;
@@ -84,6 +84,7 @@ window.onload = function () {
 
         /* see if the agent is still alive */
         if(Map.tiles[agent.currPos.x][agent.currPos.y].hasPit) {
+            new Audio('Sound/fall.mp3').play();
             console.log("--------------------------------------");
             console.log("Aaaahhhh!");
             console.log("--------------------------------------");
@@ -91,6 +92,7 @@ window.onload = function () {
         }
 
         if(Map.tiles[agent.currPos.x][agent.currPos.y].hasWumpus) {
+            new Audio('Sound/roar.mp3').play()
             console.log("--------------------------------");
             console.log("Noo! The agent has been eaten by the Wumpus!");
             console.log("--------------------------------------");
@@ -113,6 +115,7 @@ window.onload = function () {
                 }
             }
 
+            new Audio('Sound/tada.wav').play();
             console.log("--------------------------------------");
             console.log("Woohoo!! I am rich!!");
             console.log("--------------------------------------");

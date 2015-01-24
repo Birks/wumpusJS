@@ -78,10 +78,16 @@ function Agent(x, y) {
             return;
         }
 
+
+
         if (KnowledgeBase.wumpusCoords.x != -1 && KnowledgeBase.wumpusCoords.y != -1) {
             if (this.currPos.x == KnowledgeBase.wumpusCoords.x || this.currPos.y == KnowledgeBase.wumpusCoords.y) {
                 console.log("--------------------------------------");
                 console.log("Well this one's ought to hurt! BUMM");
+
+                new Audio('Sound/bow.mp3').play();
+
+
                 /* if the agent is able to shoot down the wumpus
                  * meaning his coordinates are correct */
                 if (this.currPos.x == Map.wumpusCoords.x || this.currPos.y == Map.wumpusCoords.y) {
@@ -100,6 +106,7 @@ function Agent(x, y) {
                     KnowledgeBase.wumpusCoords.y = -1;
                     KnowledgeBase.wumpusIsAlive = false;
 
+                    new Audio('Sound/scream.mp3').play();
                     console.log("A loud scream can be heard! The Wumpus is dead!!");
 
                 }
