@@ -99,8 +99,28 @@ var Draw = {
                     ctx.fillStyle = "#00CCFF";
                 }
                 else ctx.fillStyle = "#99FF33";
+
                 ctx.fillRect(y * Game.tileSize, x * Game.tileSize, Game.tileSize, Game.tileSize);
 
+            }
+        }
+    },
+
+    drawX: function (canvas, x, y) {
+        var ctx;
+        if (canvas && canvas.getContext) {
+            ctx = canvas.getContext("2d");
+            if (ctx) {
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "#000";
+                ctx.beginPath();
+                ctx.globalAlpha = 1;
+                ctx.moveTo(y * Game.tileSize, x * Game.tileSize);
+                ctx.lineTo((y + 1) * Game.tileSize, (x + 1) * Game.tileSize);
+                ctx.stroke();
+                ctx.moveTo((y + 1) * Game.tileSize, x * Game.tileSize);
+                ctx.lineTo(y * Game.tileSize, (x + 1) * Game.tileSize);
+                ctx.stroke();
             }
         }
     }
