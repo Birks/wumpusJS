@@ -33,32 +33,34 @@ window.onload = function () {
      Map.tiles[1][3].hasGlimmer = true;
      Map.tiles[3][3].hasBreeze = true;*/
 
-    Map.tiles[2][0].hasStink = true;
-    Map.tiles[1][1].hasStink = true;
-    Map.tiles[2][1].hasWumpus = true;
-    Map.wumpusCoords = {x: 2, y: 1};
-    Map.tiles[3][1].hasStink = true;
-    Map.tiles[2][2].hasStink = true;
-    Map.tiles[1][2].hasBreeze = true;
-    Map.tiles[0][3].hasStink = true;
-    Map.tiles[1][3].hasPit = true;
-    Map.tiles[2][3].hasBreeze = true;
-    Map.tiles[3][3].hasGold = true;
-    Map.tiles[3][3].hasGlimmer = true;
+    //Map.tiles[2][0].hasStink = true;
+    //Map.tiles[1][1].hasStink = true;
+    //Map.tiles[2][1].hasWumpus = true;
+    //Map.wumpusCoords = {x: 2, y: 1};
+    //Map.tiles[3][1].hasStink = true;
+    //Map.tiles[2][2].hasStink = true;
+    //Map.tiles[1][2].hasBreeze = true;
+    //Map.tiles[0][3].hasBreeze = true;
+    //Map.tiles[1][3].hasPit = true;
+    //Map.tiles[2][3].hasBreeze = true;
+    //Map.tiles[3][3].hasGold = true;
+    //Map.tiles[3][3].hasGlimmer = true;
 
-    /*Map.tiles[1][0].hasStink = true;
-     Map.tiles[0][1].hasStink = true;
-     Map.tiles[2][1].hasStink = true;
-     Map.tiles[1][2].hasStink = true;
-     Map.tiles[1][1].hasWumpus = true;
-     Map.wumpusCoords = { x: 1, y: 1};
-     Map.tiles[3][1].hasBreeze = true;
-     Map.tiles[2][2].hasBreeze = true;
-     Map.tiles[3][2].hasPit = true;
-     Map.tiles[3][3].hasBreeze = true;
-     Map.tiles[0][3].hasGold = true;
-     Map.tiles[0][3].hasGlimmer = true;*/
+    ///*Map.tiles[1][0].hasStink = true;
+    // Map.tiles[0][1].hasStink = true;
+    // Map.tiles[2][1].hasStink = true;
+    // Map.tiles[1][2].hasStink = true;
+    // Map.tiles[1][1].hasWumpus = true;
+    // Map.wumpusCoords = { x: 1, y: 1};
+    // Map.tiles[3][1].hasBreeze = true;
+    // Map.tiles[2][2].hasBreeze = true;
+    // Map.tiles[3][2].hasPit = true;
+    // Map.tiles[3][3].hasBreeze = true;
+    // Map.tiles[0][3].hasGold = true;
+    // Map.tiles[0][3].hasGlimmer = true;*/
 
+    /* generating a custom map */
+    Map.generate();
 
     /* draw the map on canvas */
     Draw.init();
