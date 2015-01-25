@@ -33,6 +33,10 @@ var KnowledgeBase = {
             if(this.wumpusIsAlive && this.sentences[i].hasWumpus){
                 this.db[this.sentences[i].pos.x][this.sentences[i].pos.y].wumpusCount++;
             }
+            /* breeze */
+            if(this.sentences[i].hasPit){
+                this.db[this.sentences[i].pos.x][this.sentences[i].pos.y].pitCount++;
+            }
         }
 
         /* try to find the wumpus */
@@ -40,7 +44,19 @@ var KnowledgeBase = {
             for(var j = 0; j < DIM; j++){
                 /* wumpus */
                 if(this.wumpusIsAlive && this.db[i][j].wumpusCount >= 2) this.wumpusCoords = { x: i, y: j };
+
+                /* init heuristics */
+                this.db[i][j].heuristics = 0;
+                /* if something has been already visited, it cannot contain a wumpus nor a pit */
+                if(this.db[i][j].hasWumpus && this.db[i][j].visited) this.db[i][j].hasWumpus = false;
+                if(this.db[i][j].hasPit && this.db[i][j].visited) this.db[i][j].hasPit = false;
+                /* calculate the heuristics */
+                if(this.db[i][j].hasPit) this.db[i][j].heuristics += 10 * this.db[i][j].pitCount;
+                if(this.db[i][j].hasWumpus) this.db[i][j].heuristics += 10 * this.db[i][j].wumpusCount;
+                if(!this.db[i][j].hasPit && !this.db[i][j].hasWumpus && !this.db[i][j].visited) this.db[i][j].heuristics -= 5;
+                /* initialize to zero */
                 this.db[i][j].wumpusCount = 0;
+                this.db[i][j].pitCount = 0;
             }
         }
     },
@@ -60,7 +76,7 @@ var KnowledgeBase = {
 
             case Type.PIT:
                 if(this.db[i][j].firstPitGuess){
-                    this.db[i][j].hasWumpus = this.sentences[k].hasWumpus;
+                    this.db[i][j].hasPit = this.sentences[k].hasPit;
                     this.db[i][j].firstPitGuess = false;
                 }
                 this.db[i][j].hasPit = this.db[i][j].hasPit && this.sentences[k].hasPit;

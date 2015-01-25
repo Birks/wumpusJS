@@ -12,7 +12,9 @@ function Agent(x, y) {
         /* see if it can kill the wumpus */
         this.killWumpus();
         /* build the tree */
-        SearchTree.openList.unshift({x: this.prevPos.x, y: this.prevPos.y});
+        KnowledgeBase.db[this.currPos.x][this.currPos.y].visited = true;
+        SearchTree.openList = [];
+        //SearchTree.openList.unshift({x: this.prevPos.x, y: this.prevPos.y});
 
         if (this.currPos.y + 1 < DIM && this.currPos.y + 1 != this.prevPos.y) {
             SearchTree.openList.unshift({x: this.currPos.x, y: this.currPos.y + 1});
@@ -33,9 +35,27 @@ function Agent(x, y) {
 
         SearchTree.closedList.push({x: this.currPos.x, y: this.currPos.y});
 
+        nextStep = { x: 0, y: 0, heuristics: 999 };
+        var minHeurNum = 0;
+
+        for(var i = 0; i < SearchTree.openList.length; i++){
+            if(KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics < nextStep.heuristics){
+                nextStep = { x: SearchTree.openList[i].x, y: SearchTree.openList[i].y, heuristics: KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics };
+            }
+
+            if(KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics == nextStep.heuristics) minHeurNum++;
+        }
+
+        if(minHeurNum > 0){
+            /*rand = Math.floor(Math.random() * SearchTree.openList.length);
+            if(rand == SearchTree.openList.length) rand--;
+            nextStep = SearchTree.openList[rand];*/
+            //nextStep = { x: this.prevPos.x, y: this.prevPos.y };
+        }
+
+        /*
         rand = Math.random();
-        /* dfs with a random element to it */
-        if (rand < 0.4) {
+        if (rand <= 0) {
             rand = Math.floor(Math.random() * shifted);
             nextStep = SearchTree.openList[rand];
             SearchTree.openList.splice(rand, 1);
@@ -45,20 +65,21 @@ function Agent(x, y) {
                 nextStep = SearchTree.openList.shift();
             } while (!KnowledgeBase.db[nextStep.x][nextStep.y].isSafe());
         }
+        */
 
         /* set agent positions */
-        this.prevPos = {x: this.currPos.x, y: this.currPos.y};
+        this.prevPos = { x: this.currPos.x, y: this.currPos.y };
         this.currPos = {x: nextStep.x, y: nextStep.y};
 
         console.log(" I am currently on x: " + this.currPos.x + " y: " + this.currPos.y);
 
-        if (Map.tiles[this.currPos.x][this.currPos.y].hasBreeze && !KnowledgeBase.db[this.currPos.x][this.currPos.y].visited) {
+        if (Map.tiles[this.currPos.x][this.currPos.y].hasBreeze) {
             console.log("It is really breezy around here! ");
             KnowledgeBase.db[this.currPos.x][this.currPos.y].hasBreeze = true;
         }
-        if (Map.tiles[this.currPos.x][this.currPos.y].hasStink && !KnowledgeBase.db[this.currPos.x][this.currPos.y].visited) {
+        if (Map.tiles[this.currPos.x][this.currPos.y].hasStink) {
             console.log("This place reeks!");
-            KnowledgeBase.db[this.currPos.x][this.currPos.y].hasBreeze = true;
+            KnowledgeBase.db[this.currPos.x][this.currPos.y].hasStink = true;
         }
         if (Map.tiles[this.currPos.x][this.currPos.y].hasGlimmer) {
             console.log("--------------------------------------");
@@ -67,7 +88,38 @@ function Agent(x, y) {
         }
 
         /* let us make a statement that we've visited the given tile */
-        KnowledgeBase.db[nextStep.x][nextStep.y].visited = true;
+        KnowledgeBase.db[this.currPos.x][this.currPos.y].visited = true;
+        this.gatherAdjacentInfo();
+    };
+
+    /* gather information from the current cell
+     * and add new knowledge base entries based upon the
+     * observations */
+    this.gatherAdjacentInfo = function () {
+        if(this.currPos.x + 1 < DIM && !KnowledgeBase.db[this.currPos.x + 1][this.currPos.y].visited){
+            this.setAdjacentCell({ x: this.currPos.x + 1, y: this.currPos.y });
+        }
+        if(this.currPos.x - 1 >= 0 && !KnowledgeBase.db[this.currPos.x - 1][this.currPos.y].visited){
+            this.setAdjacentCell({ x: this.currPos.x - 1, y: this.currPos.y });
+        }
+        if(this.currPos.y + 1 < DIM && !KnowledgeBase.db[this.currPos.x][this.currPos.y + 1].visited){
+            this.setAdjacentCell({ x: this.currPos.x, y: this.currPos.y + 1 });
+        }
+        if(this.currPos.y - 1 >= 0 && !KnowledgeBase.db[this.currPos.x][this.currPos.y - 1].visited){
+            this.setAdjacentCell({ x: this.currPos.x, y: this.currPos.y - 1 });
+        }
+
+        KnowledgeBase.reload();
+    };
+
+    /* set pit */
+    this.setAdjacentCell = function (newPos) {
+        var cell = new Cell(newPos.x, newPos.y);
+        /* set pit or wumpus */
+        if(Map.tiles[this.currPos.x][this.currPos.y].hasBreeze) cell.hasPit = true;
+        if(Map.tiles[this.currPos.x][this.currPos.y].hasStink) cell.hasWumpus = true;
+        /* keep breeze and stink */
+        KnowledgeBase.add(cell);
     };
 
     this.killWumpus = function () {
@@ -75,10 +127,8 @@ function Agent(x, y) {
             console.log("--------------------------------------");
             console.log("Oh noes!! I am out of ammo!");
             console.log("--------------------------------------");
-            return;
+            return 0;
         }
-
-
 
         if (KnowledgeBase.wumpusCoords.x != -1 && KnowledgeBase.wumpusCoords.y != -1) {
             if (this.currPos.x == KnowledgeBase.wumpusCoords.x || this.currPos.y == KnowledgeBase.wumpusCoords.y) {
@@ -90,30 +140,23 @@ function Agent(x, y) {
 
                 /* if the agent is able to shoot down the wumpus
                  * meaning his coordinates are correct */
-                if (this.currPos.x == Map.wumpusCoords.x || this.currPos.y == Map.wumpusCoords.y) {
+                /* do some cleanup */
+                Map.tiles[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
 
-                    /* do some cleanup */
-                    Map.tiles[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
-
-                    for (var i = 0; i < DIM; i++) {
-                        for (var j = 0; j < DIM; j++) {
-                            if (KnowledgeBase.db[i][j].hasWumpus) KnowledgeBase.db[i][j].hasWumpus = false;
-                        }
+                for (var i = 0; i < DIM; i++) {
+                    for (var j = 0; j < DIM; j++) {
+                    if (KnowledgeBase.db[i][j].hasWumpus) KnowledgeBase.db[i][j].hasWumpus = false;
                     }
-
-                    Draw.drawX(document.getElementById("Canvas1"), KnowledgeBase.wumpusCoords.x, KnowledgeBase.wumpusCoords.y);
-                    KnowledgeBase.wumpusCoords.x = -1;
-                    KnowledgeBase.wumpusCoords.y = -1;
-                    KnowledgeBase.wumpusIsAlive = false;
-
-                    new Audio('Sound/scream.mp3').play();
-                    console.log("A loud scream can be heard! The Wumpus is dead!!");
-
                 }
-                else { /* the agent was at the wrong position */
-                    console.log("Oh noes! I was wrong about this...");
+
+                Draw.drawX(document.getElementById("Canvas1"), KnowledgeBase.wumpusCoords.x, KnowledgeBase.wumpusCoords.y);
+                KnowledgeBase.wumpusCoords.x = -1;
+                KnowledgeBase.wumpusCoords.y = -1;
+                KnowledgeBase.wumpusIsAlive = false;
+
+                new Audio('Sound/scream.mp3').play();
+                console.log("A loud scream can be heard! The Wumpus is dead!!");
                 }
-            }
             console.log("--------------------------------------");
             this.ammo--;
         }

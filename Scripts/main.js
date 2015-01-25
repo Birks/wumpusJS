@@ -81,8 +81,8 @@ window.onload = function () {
 
         /* move */
         agent.move();
+        console.log(KnowledgeBase.db);
         Draw.drawmove(document.getElementById("Canvas1"),"forward",agent.currPos.x,agent.currPos.y);
-        Map.gatherAdjacentInfo(agent);
 
         /* see if the agent is still alive */
         if(Map.tiles[agent.currPos.x][agent.currPos.y].hasPit) {
