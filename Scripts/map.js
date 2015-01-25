@@ -73,7 +73,7 @@ var Map = {
         for (i = 0; i < DIM / 2 - 1; i++) {
             m = Math.floor((Math.random() * DIM));
             n = Math.floor((Math.random() * DIM));
-            if (this.tiles[m][n].hasPit == false && !(m == DIM - 1 && n == 0 )) {
+            if (this.tiles[m][n].hasPit == false && !(m == DIM - 1 && n == 0 ) && !((m==2 && n==0) ||(m==3 && n==1))) {
                 this.tiles[m][n].hasPit = true;
             }
             else
@@ -84,7 +84,7 @@ var Map = {
         while (true) {
             m = Math.floor((Math.random() * DIM));
             n = Math.floor((Math.random() * DIM));
-            if (this.tiles[m][n].hasWumpus == false && !this.tiles[m][n].hasPit && !(m == DIM - 1 && n == 0 )) {
+            if (this.tiles[m][n].hasWumpus == false && !this.tiles[m][n].hasPit && !(m == DIM - 1 && n == 0 ) && !((m==2 && n==0) ||(m==3 && n==1))) {
                 this.tiles[m][n].hasWumpus = true;
                 this.wumpusCoords = {x: m, y: n};
                 break;
