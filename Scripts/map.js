@@ -86,6 +86,7 @@ var Map = {
             n = Math.floor((Math.random() * DIM));
             if (this.tiles[m][n].hasWumpus == false && !this.tiles[m][n].hasPit && !(m == DIM - 1 && n == 0 )) {
                 this.tiles[m][n].hasWumpus = true;
+                this.wumpusCoords = {x: m, y: n};
                 break;
             }
         }
@@ -96,6 +97,7 @@ var Map = {
             n = Math.floor((Math.random() * DIM));
             if (this.tiles[m][n].hasGlimmer == false && !this.tiles[m][n].hasPit && !this.tiles[m][n].hasWumpus && !(m == DIM - 1 && n == 0 )) {
                 this.tiles[m][n].hasGlimmer = true;
+                this.tiles[m][n].hasGold= true;
                 break;
             }
         }
