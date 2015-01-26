@@ -8,7 +8,7 @@ function Agent(x, y) {
         /* variables */
         var nextStep;
         var rand;
-        var shifted = 0;
+        //var shifted = 0;
         /* see if it can kill the wumpus */
         this.killWumpus();
         /* build the tree */
@@ -18,38 +18,44 @@ function Agent(x, y) {
 
         if (this.currPos.y + 1 < DIM && this.currPos.y + 1 != this.prevPos.y) {
             SearchTree.openList.unshift({x: this.currPos.x, y: this.currPos.y + 1});
-            shifted++;
+            //shifted++;
         }
         if (this.currPos.y - 1 >= 0 && this.currPos.y - 1 != this.prevPos.y) {
             SearchTree.openList.unshift({x: this.currPos.x, y: this.currPos.y - 1});
-            shifted++;
+            //shifted++;
         }
         if (this.currPos.x + 1 < DIM && this.currPos.x + 1 != this.prevPos.x) {
             SearchTree.openList.unshift({x: this.currPos.x + 1, y: this.currPos.y});
-            shifted++;
+            //shifted++;
         }
         if (this.currPos.x - 1 >= 0 && this.currPos.x - 1 != this.prevPos.x) {
             SearchTree.openList.unshift({x: this.currPos.x - 1, y: this.currPos.y});
-            shifted++;
+            //shifted++;
         }
 
         SearchTree.closedList.push({x: this.currPos.x, y: this.currPos.y});
 
         nextStep = { x: 0, y: 0, heuristics: 999 };
         var minHeurNum = 0;
+        var minHeurArray = [];
 
         for(var i = 0; i < SearchTree.openList.length; i++){
             if(KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics < nextStep.heuristics){
                 nextStep = { x: SearchTree.openList[i].x, y: SearchTree.openList[i].y, heuristics: KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics };
             }
-
-            if(KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics == nextStep.heuristics) minHeurNum++;
+        }
+        /* serach if there are more equal ways to go */
+        for(var i = 0; i < SearchTree.openList.length; i++){
+            if(KnowledgeBase.db[SearchTree.openList[i].x][SearchTree.openList[i].y].heuristics == nextStep.heuristics) {
+                minHeurNum++;
+                minHeurArray.push({ x: SearchTree.openList[i].x, y: SearchTree.openList[i].y });
+            }
         }
 
         if(minHeurNum > 0){
-            /*rand = Math.floor(Math.random() * SearchTree.openList.length);
-            if(rand == SearchTree.openList.length) rand--;
-            nextStep = SearchTree.openList[rand];*/
+            rand = Math.floor(Math.random() * SearchTree.openList.length);
+            if(rand == minHeurArray.length) rand--;
+            nextStep = minHeurArray[rand];
             //nextStep = { x: this.prevPos.x, y: this.prevPos.y };
         }
 
@@ -69,7 +75,7 @@ function Agent(x, y) {
 
         /* set agent positions */
         this.prevPos = { x: this.currPos.x, y: this.currPos.y };
-        this.currPos = {x: nextStep.x, y: nextStep.y};
+        this.currPos = { x: nextStep.x, y: nextStep.y };
 
         console.log(" I am currently on x: " + this.currPos.x + " y: " + this.currPos.y);
 
@@ -142,12 +148,9 @@ function Agent(x, y) {
                  * meaning his coordinates are correct */
                 /* do some cleanup */
                 Map.tiles[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
+                KnowledgeBase.db[KnowledgeBase.wumpusCoords.x][KnowledgeBase.wumpusCoords.y].hasWumpus = false;
 
-                for (var i = 0; i < DIM; i++) {
-                    for (var j = 0; j < DIM; j++) {
-                    if (KnowledgeBase.db[i][j].hasWumpus) KnowledgeBase.db[i][j].hasWumpus = false;
-                    }
-                }
+
 
                 Draw.drawX(document.getElementById("Canvas1"), KnowledgeBase.wumpusCoords.x, KnowledgeBase.wumpusCoords.y);
                 KnowledgeBase.wumpusCoords.x = -1;
